@@ -33,22 +33,30 @@
 			<scope>import</scope>
 			<type>pom</type>
 		</dependency>
+		<dependency>
+			<groupId>io.openliberty.boosters</groupId>
+			<artifactId>runtimes-bom</artifactId>
+			<version>0.1.3-SNAPSHOT</version>
+			<scope>import</scope>
+			<type>pom</type>
+		</dependency>
 		</dependencies>
 	</dependencyManagement>
 
     <dependencies>
+	<!--
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
 			<version>8.0</version>
 			<scope>provided</scope>
-		</dependency>
-		<!-- -->
+		</dependency> -->
+		<!--
 		<dependency>
 			<groupId>io.openliberty.boosters</groupId>
 			<artifactId>mpConfig</artifactId>
 		</dependency>
-		<!-- -->
+		-->
 		<!--
 		<dependency>
 			<groupId>org.apache.geronimo.config</groupId>
@@ -56,20 +64,48 @@
 			<version>1.0</version>
 		</dependency>
 		-->
+				<!-- needed for the ee8 security support -->
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>8.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- needed to get boost config data into a running server -->
+		<dependency>
+			<groupId>io.openliberty.boosters</groupId>
+			<artifactId>mpConfig</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.openliberty.boosters</groupId>
+			<artifactId>tomee</artifactId>
+		</dependency>
     </dependencies>
 
-    <build>
-        <finalName>${project.artifactId}</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.tomee.maven</groupId>
-                <artifactId>tomee-maven-plugin</artifactId>
-                <version>${tomee.version}</version>
-                <configuration>
-                    <tomeeVersion>${tomee.version}</tomeeVersion>
-                    <tomeeClassifier>plus</tomeeClassifier>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>io.openliberty.boost</groupId>
+				<artifactId>boost-maven-plugin</artifactId>
+				<version>0.1.3-SNAPSHOT</version>
+				<!--
+				<configuration>
+					<runtimeArtifact>
+						<groupId>${runtimeGroupId}</groupId>
+						<artifactId>${runtimeArtifactId}</artifactId>
+						<version>${runtimeVersion}</version>
+						<type>zip</type>
+					</runtimeArtifact>
+				</configuration>
+				-->
+				<executions>
+					<execution>
+						<goals>
+							<goal>package</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
